@@ -2,12 +2,9 @@ import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args){
-        InventoryService inventoryService = new InventoryService();
-        PaymentService paymentService = new paymentService();
-        OrderService orderService = new OrderService(inventoryService, paymentService);
-        // Is Main actually the right place to know how the entire application is constructed?
-        // No new service were created. But if this trend is followed OrderService constructor
-        // will have other dependencies like: TaxRepository, TaxService, PricingRepository, PricingService, EmailClient, NotificationService, PaymentGateway, PaymentService, InventoryService, OrderService
+        Application application = new Application();
+        OrderService orderService = application.createOrderService();
+        // application object takes the brunt of the mini IoC
 
         Scanner sc = new Scanner(System.in);
 
@@ -60,3 +57,11 @@ public class Main{
         }
     }
 }
+
+
+// Main: used to handle 3 things.
+// -- Start(Bootstrap) of the application
+// -- Object Creation/Composition(has-a relationship).
+// -- UI, in the form of console(input parsing, menu handling, application shutdown).
+//
+// Application.java would remove the object creation/composition from Main
