@@ -8,7 +8,7 @@ public class OrderService{
     private int nextId = 1;
 
     // Question: Why am I spending my application entry point assembling an object graph?
-    public OrderService(){
+    public OrderService(InventoryService inventoryService, PaymentService paymentService){
         this.inventoryService = new InventoryService();
         this.paymentService = new PaymentService();
     }

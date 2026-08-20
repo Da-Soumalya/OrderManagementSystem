@@ -2,7 +2,13 @@ import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args){
-        OrderService orderService = new OrderService();
+        InventoryService inventoryService = new InventoryService();
+        PaymentService paymentService = new paymentService();
+        OrderService orderService = new OrderService(inventoryService, paymentService);
+        // Is Main actually the right place to know how the entire application is constructed?
+        // No new service were created. But if this trend is followed OrderService constructor
+        // will have other dependencies like: TaxRepository, TaxService, PricingRepository, PricingService, EmailClient, NotificationService, PaymentGateway, PaymentService, InventoryService, OrderService
+
         Scanner sc = new Scanner(System.in);
 
         while(true){
