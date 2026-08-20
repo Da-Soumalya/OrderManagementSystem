@@ -3,9 +3,27 @@ import java.util.List;
 
 public class OrderService{
     private final List<Order> orders = new ArrayList<>();
+    private final InventoryService inventoryService;
+    private final PaymentService paymentService;
     private int nextId = 1;
 
+    // Question: Why am I spending my application entry point assembling an object graph?
+    public OrderService(){
+        this.inventoryService = new InventoryService();
+        this.paymentService = new PaymentService();
+    }
+
     public void createOrder(String customerName, String productName, int quantity){
+        if(!inventoryService.isAvailable(productName, quantity)){
+            System.out.println("Insufficient inventory.");
+            return;
+        }
+
+        if(!paymentService.processPayment(1000)){
+            System.out.println("Payment failed.");
+            return;
+        }
+        
         Order order = new Order(
             nextId++,
             customerName,
